@@ -47,7 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\Company.cs" />
+    <Compile Include="classes\Invoice.cs" />
+    <Compile Include="classes\InvoiceItem.cs" />
     <Compile Include="classes\Item.cs" />
+    <Compile Include="classes\Pricelist.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
