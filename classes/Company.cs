@@ -16,6 +16,7 @@ namespace GORIPBS.classes
         public int PostalCode { get; set; }
         public string Owner { get; set; }
         public string BankAccount { get; set; }
+        public string IdentificationNumber { get; set; }
         public string Bank { get; set; }
         public int ActivityCode { get; set; }
         public string Telephone { get; set; }
@@ -25,7 +26,7 @@ namespace GORIPBS.classes
 
         public Company() { }
 
-        public Company(int companyId, string name, string pib, string address, string city, int postalCode, string owner, string bankAccount, string bank, int activityCode, string telephone, string mobileNumber, string email, string fax)
+        public Company(int companyId, string name, string pib, string address, string city, int postalCode, string owner, string bankAccount, string identificationNumber, string bank, int activityCode, string telephone, string mobileNumber, string email, string fax)
         {
             CompanyId = companyId;
             Name = name;
@@ -35,6 +36,7 @@ namespace GORIPBS.classes
             PostalCode = postalCode;
             Owner = owner;
             BankAccount = bankAccount;
+            IdentificationNumber = identificationNumber;
             Bank = bank;
             ActivityCode = activityCode;
             Telephone = telephone;
