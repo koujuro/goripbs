@@ -10,7 +10,8 @@ namespace GORIPBS.classes
     class DataBase
     {
         public static DataBase instance;
-        private SQLiteConnection
+        public string connectionString;
+        private SQLiteConnection connection;
 
         public static DataBase DataBaseSingleton() 
         {
@@ -19,6 +20,51 @@ namespace GORIPBS.classes
             return instance;
         }
 
+        private DataBase() 
+        {
+            connectionString = @"Data Source=" + generatePathForConnectionString() + ";Version=3;";
+            connection = new SQLiteConnection(connectionString);
+        }
 
+        private string generatePathForConnectionString() 
+        {
+            string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+            string newPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(path, "..", ".."));
+            return newPath + "\\database\\database.db";
+        }
+
+        public string selectionQuery(string sql) 
+        {
+            openConnection();
+            string result = "";
+            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read()) {
+                result += reader["Name"] + ", ";
+            }
+            closeConnection();
+
+            return result.Substring(0, result.Length - 2);
+        }
+
+        public int executionQuery(string sql)
+        {
+            openConnection();
+            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            int rowsAffected = command.ExecuteNonQuery();
+            closeConnection();
+
+            return rowsAffected;
+        }
+
+        public void openConnection() 
+        {
+            connection.Open();
+        }
+
+        public void closeConnection()
+        {
+            connection.Close();
+        }
     }
 }
