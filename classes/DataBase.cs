@@ -33,18 +33,15 @@ namespace GORIPBS.classes
             return newPath + "\\database\\database.db";
         }
 
-        public string selectionQuery(string sql) 
+        public SQLiteDataReader selectionQuery(string sql) 
         {
             openConnection();
             string result = "";
             SQLiteCommand command = new SQLiteCommand(sql, connection);
             SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read()) {
-                result += reader["Name"] + ", ";
-            }
-            closeConnection();
+            //closeConnection();
 
-            return result.Substring(0, result.Length - 2);
+            return reader;
         }
 
         public int executionQuery(string sql)
