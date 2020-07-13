@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 
-namespace GORIPBS.classes
+namespace GORIPBS.database
 {
     class DataBase
     {
@@ -30,26 +30,25 @@ namespace GORIPBS.classes
         {
             string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string newPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(path, "..", ".."));
-            return newPath + "\\database\\database.db";
+            return newPath + "\\assets\\database.db";
         }
 
-        public SQLiteDataReader selectionQuery(string sql) 
+        public SQLiteDataReader selectionQuery(SQLiteCommand command) 
         {
             openConnection();
-            string result = "";
-            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            command.Connection = connection;
             SQLiteDataReader reader = command.ExecuteReader();
             //closeConnection();
 
             return reader;
         }
 
-        public int executionQuery(string sql)
+        public int executionQuery(SQLiteCommand command)
         {
             openConnection();
-            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            command.Connection = connection;
             int rowsAffected = command.ExecuteNonQuery();
-            closeConnection();
+            //closeConnection();
 
             return rowsAffected;
         }

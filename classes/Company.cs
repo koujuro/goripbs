@@ -24,7 +24,24 @@ namespace GORIPBS.classes
         public string Email { get; set; }
         public string Fax { get; set; }
 
-        public Company() { }
+        public Company() 
+        {
+            CompanyId = 0;
+            Name = "";
+            PIB = "";
+            Address = "";
+            City = "";
+            PostalCode = 0;
+            Owner = "";
+            BankAccount = "";
+            IdentificationNumber = "";
+            Bank = "";
+            ActivityCode = 0;
+            Telephone = "";
+            MobileNumber = "";
+            Email = "";
+            Fax = "";
+        }
 
         public Company(int companyId, string name, string pib, string address, string city, int postalCode, string owner, string bankAccount, string identificationNumber, string bank, int activityCode, string telephone, string mobileNumber, string email, string fax)
         {

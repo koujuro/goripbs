@@ -67,12 +67,14 @@
   <ItemGroup>
     <Compile Include="classes\Company.cs" />
     <Compile Include="classes\CompanyDirectory.cs" />
-    <Compile Include="classes\DataBase.cs" />
+    <Compile Include="database\DataBase.cs" />
     <Compile Include="classes\ExtensionMethods.cs" />
     <Compile Include="classes\Invoice.cs" />
     <Compile Include="classes\InvoiceItem.cs" />
     <Compile Include="classes\Item.cs" />
     <Compile Include="classes\Pricelist.cs" />
+    <Compile Include="database\SqlHandler.cs" />
+    <Compile Include="database\SqlParameter.cs" />
     <Compile Include="CompanyDirectoryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +104,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Content Include="database\database.db" />
+    <Content Include="assets\database.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

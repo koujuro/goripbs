@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GORIPBS.database;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Data.SQLite;
@@ -31,7 +32,7 @@ namespace GORIPBS.classes
         private SQLiteDataReader fetchCompaniesFromDB() 
         {
             string sql = "SELECT * FROM COMPANY WHERE CompanyID is not 1 AND Deleted is not 1";
-            SQLiteDataReader sQLiteDataReader = DataBase.DataBaseSingleton().selectionQuery(sql);
+            SQLiteDataReader sQLiteDataReader = SqlHandler.selectionQuery(sql);
             return sQLiteDataReader;
         }
 
@@ -54,16 +55,16 @@ namespace GORIPBS.classes
                 row.SafeGetString(14));
         }
 
-        //private string[] parseValuesFromRowInDB(SQLiteDataReader row) 
-        //{
-        //    string[] values = new string[row.FieldCount];
-        //    int id;
-        //    for (int i = 0; i < values.Length-1; i++)
-        //    {
-        //        //values[i] = row.SafeGetString(i);
-        //        id = row.SafeGetInt(i);
-        //    }
-        //    return values;
-        //}
+        public void insertEmptyCompanyIntoList() 
+        {
+            ListOfCompanies.Add(new Company());
+        }
+
+        public int deleteCompanyFromDB(int companyId) 
+        {
+            string sql = "UPDATE COMPANY SET Deleted=1 WHERE CompanyId=@companyId";
+
+            return 1;
+        }
     }
 }

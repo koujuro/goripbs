@@ -103,6 +103,7 @@
             this.addNewCompanyButton.TabIndex = 1;
             this.addNewCompanyButton.Text = "** Dodaj";
             this.addNewCompanyButton.UseVisualStyleBackColor = true;
+            this.addNewCompanyButton.Click += new System.EventHandler(this.addNewCompanyButton_Click);
             // 
             // saveNewCompanyButton
             // 
@@ -121,6 +122,7 @@
             this.deleteCompanyButton.TabIndex = 3;
             this.deleteCompanyButton.Text = "** Obriši";
             this.deleteCompanyButton.UseVisualStyleBackColor = true;
+            this.deleteCompanyButton.Click += new System.EventHandler(this.deleteCompanyButton_Click);
             // 
             // exitFormButton
             // 
@@ -133,11 +135,13 @@
             // 
             // companiesDataGridView
             // 
+            this.companiesDataGridView.AllowUserToAddRows = false;
             this.companiesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.companiesDataGridView.Location = new System.Drawing.Point(12, 95);
             this.companiesDataGridView.Name = "companiesDataGridView";
             this.companiesDataGridView.Size = new System.Drawing.Size(488, 343);
             this.companiesDataGridView.TabIndex = 5;
+            this.companiesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.companiesDataGridView_CellClick);
             // 
             // companyNameLabel
             // 
