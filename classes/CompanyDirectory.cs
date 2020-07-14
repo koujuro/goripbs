@@ -1,6 +1,7 @@
 ﻿using GORIPBS.database;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.SqlServer;
 using System.Data.SQLite;
 using System.Linq;
@@ -60,11 +61,33 @@ namespace GORIPBS.classes
             ListOfCompanies.Add(new Company());
         }
 
-        public int deleteCompanyFromDB(int companyId) 
+        public bool deleteCompany(int indexInListOfCompanies) 
+        {
+            if (ListOfCompanies[indexInListOfCompanies].CompanyId == 0)
+            {
+                ListOfCompanies.RemoveAt(indexInListOfCompanies);
+                return true;
+            }
+            else
+            {
+                if (deleteCompanyFromDB(ListOfCompanies[indexInListOfCompanies].CompanyId) == 1)
+                {
+                    ListOfCompanies.RemoveAt(indexInListOfCompanies);
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
+
+        private int deleteCompanyFromDB(int companyId) 
         {
             string sql = "UPDATE COMPANY SET Deleted=1 WHERE CompanyId=@companyId";
+            SqlParameter[] sqlParameters = new SqlParameter[] { 
+                new SqlParameter("companyId", companyId.ToString(), DbType.Int32) 
+            };
 
-            return 1;
+            return SqlHandler.executionQuery(sql, sqlParameters);
         }
     }
 }

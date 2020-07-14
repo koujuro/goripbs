@@ -31,8 +31,8 @@
             this.searchCompanyGroupBox = new System.Windows.Forms.GroupBox();
             this.searchCompanyButton = new System.Windows.Forms.Button();
             this.searchCompanyTextBox = new System.Windows.Forms.TextBox();
-            this.addNewCompanyButton = new System.Windows.Forms.Button();
-            this.saveNewCompanyButton = new System.Windows.Forms.Button();
+            this.addNewEmptyCompanyButton = new System.Windows.Forms.Button();
+            this.saveCompanyButton = new System.Windows.Forms.Button();
             this.deleteCompanyButton = new System.Windows.Forms.Button();
             this.exitFormButton = new System.Windows.Forms.Button();
             this.companiesDataGridView = new System.Windows.Forms.DataGridView();
@@ -95,24 +95,24 @@
             this.searchCompanyTextBox.Size = new System.Drawing.Size(139, 20);
             this.searchCompanyTextBox.TabIndex = 1;
             // 
-            // addNewCompanyButton
+            // addNewEmptyCompanyButton
             // 
-            this.addNewCompanyButton.Location = new System.Drawing.Point(218, 28);
-            this.addNewCompanyButton.Name = "addNewCompanyButton";
-            this.addNewCompanyButton.Size = new System.Drawing.Size(138, 49);
-            this.addNewCompanyButton.TabIndex = 1;
-            this.addNewCompanyButton.Text = "** Dodaj";
-            this.addNewCompanyButton.UseVisualStyleBackColor = true;
-            this.addNewCompanyButton.Click += new System.EventHandler(this.addNewCompanyButton_Click);
+            this.addNewEmptyCompanyButton.Location = new System.Drawing.Point(218, 28);
+            this.addNewEmptyCompanyButton.Name = "addNewEmptyCompanyButton";
+            this.addNewEmptyCompanyButton.Size = new System.Drawing.Size(138, 49);
+            this.addNewEmptyCompanyButton.TabIndex = 1;
+            this.addNewEmptyCompanyButton.Text = "** Dodaj";
+            this.addNewEmptyCompanyButton.UseVisualStyleBackColor = true;
+            this.addNewEmptyCompanyButton.Click += new System.EventHandler(this.addNewEmptyCompanyButton_Click);
             // 
-            // saveNewCompanyButton
+            // saveCompanyButton
             // 
-            this.saveNewCompanyButton.Location = new System.Drawing.Point(362, 28);
-            this.saveNewCompanyButton.Name = "saveNewCompanyButton";
-            this.saveNewCompanyButton.Size = new System.Drawing.Size(138, 49);
-            this.saveNewCompanyButton.TabIndex = 2;
-            this.saveNewCompanyButton.Text = "** Sačuvaj";
-            this.saveNewCompanyButton.UseVisualStyleBackColor = true;
+            this.saveCompanyButton.Location = new System.Drawing.Point(362, 28);
+            this.saveCompanyButton.Name = "saveCompanyButton";
+            this.saveCompanyButton.Size = new System.Drawing.Size(138, 49);
+            this.saveCompanyButton.TabIndex = 2;
+            this.saveCompanyButton.Text = "** Sačuvaj";
+            this.saveCompanyButton.UseVisualStyleBackColor = true;
             // 
             // deleteCompanyButton
             // 
@@ -404,8 +404,8 @@
             this.Controls.Add(this.companiesDataGridView);
             this.Controls.Add(this.exitFormButton);
             this.Controls.Add(this.deleteCompanyButton);
-            this.Controls.Add(this.saveNewCompanyButton);
-            this.Controls.Add(this.addNewCompanyButton);
+            this.Controls.Add(this.saveCompanyButton);
+            this.Controls.Add(this.addNewEmptyCompanyButton);
             this.Controls.Add(this.searchCompanyGroupBox);
             this.Name = "CompanyDirectoryForm";
             this.Text = "CompanyDirectoryForm";
@@ -423,8 +423,8 @@
         private System.Windows.Forms.GroupBox searchCompanyGroupBox;
         private System.Windows.Forms.Button searchCompanyButton;
         private System.Windows.Forms.TextBox searchCompanyTextBox;
-        private System.Windows.Forms.Button addNewCompanyButton;
-        private System.Windows.Forms.Button saveNewCompanyButton;
+        private System.Windows.Forms.Button addNewEmptyCompanyButton;
+        private System.Windows.Forms.Button saveCompanyButton;
         private System.Windows.Forms.Button deleteCompanyButton;
         private System.Windows.Forms.Button exitFormButton;
         private System.Windows.Forms.DataGridView companiesDataGridView;

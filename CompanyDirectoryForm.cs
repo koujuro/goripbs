@@ -16,6 +16,8 @@ namespace GORIPBS
     {
         CompanyDirectory companies;
         BindingSource bindingSource;
+        int selectedDataGridViewCellRowIndex;
+        int selectedDataGridViewCellColumnIndex;
         public CompanyDirectoryForm()
         {
             InitializeComponent();
@@ -28,10 +30,14 @@ namespace GORIPBS
             bindingSource.DataSource = companies.ListOfCompanies;
             companiesDataGridView.DataSource = bindingSource;
             companiesDataGridView.Columns["CompanyID"].Visible = false;
+            selectedDataGridViewCellRowIndex = -1;
+            selectedDataGridViewCellColumnIndex = -2;
         }
 
         private void companiesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            selectedDataGridViewCellRowIndex = e.RowIndex;
+            selectedDataGridViewCellColumnIndex = e.ColumnIndex;
             if (validateSelectedRowAndColumn(e.RowIndex, e.ColumnIndex)) 
             {
                 DataGridViewRow dataGridViewRow = companiesDataGridView.Rows[e.RowIndex];
@@ -62,7 +68,7 @@ namespace GORIPBS
             faxTextBox.Text = row.Cells[14].Value.ToString();
         }
 
-        private void addNewCompanyButton_Click(object sender, EventArgs e)
+        private void addNewEmptyCompanyButton_Click(object sender, EventArgs e)
         {
             companies.insertEmptyCompanyIntoList();
             bindingSource.ResetBindings(false);
@@ -70,35 +76,23 @@ namespace GORIPBS
 
         private void deleteCompanyButton_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Da li ste sigurni da želite da obrišete izabranu firmu?", "Brisanje firme", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (validateSelectedRowAndColumn(selectedDataGridViewCellRowIndex, selectedDataGridViewCellColumnIndex))
             {
-                int selectedRow = companiesDataGridView.SelectedRows[0].Index;
-                int selectedColumn = companiesDataGridView.SelectedColumns[0].Index;
-                if (validateSelectedRowAndColumn(selectedRow, selectedColumn))
+                DialogResult dialogResult = MessageBox.Show("Da li ste sigurni da želite da obrišete izabranu firmu?", "Brisanje firme", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    
+                    if (companies.deleteCompany(selectedDataGridViewCellRowIndex))
+                    {
+                        MessageBox.Show("Firma je uspešno obrisana.");
+                        bindingSource.ResetBindings(false);
+                    }
+                    else
+                        MessageBox.Show("Došlo je do greške prilikom brisanja firme!");
                 }
-                else 
-                {
-                    MessageBox.Show("Izaberite firmu koju hoćete da obrišete.");
-                }
-            }
-            else if (dialogResult == DialogResult.No)
-            {
-                MessageBox.Show("You selected 'No'");
-            }
-        }
-
-        private void deleteCompanyBasedOnCompanyType(int indexInListOfCompanies) 
-        {
-            if (companies.ListOfCompanies[indexInListOfCompanies].CompanyId == 0)
-            {
-                companies.ListOfCompanies.RemoveAt(indexInListOfCompanies);
             }
             else
             {
-
+                MessageBox.Show("Izaberite firmu koju hoćete da obrišete.");
             }
         }
     }
