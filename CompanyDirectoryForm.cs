@@ -1,4 +1,5 @@
 ﻿using GORIPBS.classes;
+using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace GORIPBS
         BindingSource bindingSource;
         int selectedDataGridViewCellRowIndex;
         int selectedDataGridViewCellColumnIndex;
+        int selectedCompanyId;
         public CompanyDirectoryForm()
         {
             InitializeComponent();
@@ -32,6 +34,7 @@ namespace GORIPBS
             companiesDataGridView.Columns["CompanyID"].Visible = false;
             selectedDataGridViewCellRowIndex = -1;
             selectedDataGridViewCellColumnIndex = -2;
+            selectedCompanyId = -1;
         }
 
         private void companiesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -42,6 +45,7 @@ namespace GORIPBS
             {
                 DataGridViewRow dataGridViewRow = companiesDataGridView.Rows[e.RowIndex];
                 populateTextBoxesWithDataFromSelectedRow(dataGridViewRow);
+                selectedCompanyId = companies.ListOfCompanies[selectedDataGridViewCellRowIndex].CompanyId;
             }
         }
 
@@ -74,6 +78,46 @@ namespace GORIPBS
             bindingSource.ResetBindings(false);
         }
 
+        private void saveCompanyButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Company editedCompany = createCompanyFromForm();
+                if (companies.saveCompany(editedCompany))
+                {
+                    MessageBox.Show("Izmene su uspešno sačuvane.");
+                    companies.updateCompanyInListOfCompanies(editedCompany);
+                    refreshElementsInForm();
+                }
+                else
+                    MessageBox.Show("Došlo je do greške prilikom čuvanja izmena!");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Neki od unetih podataka nisu validni!");
+            }
+        }
+
+        private Company createCompanyFromForm() 
+        {
+
+            return new Company(selectedCompanyId,
+                companyNameTextBox.Text,
+                pibTextBox.Text,
+                addressTextBox.Text,
+                cityTextBox.Text,
+                Int32.Parse(postalCodeTextBox.Text),
+                ownerTextBox.Text,
+                bankAccountTextBox.Text,
+                idNumberTextBox.Text,
+                bankTextBox.Text,
+                Int32.Parse(activityCodeTextBox.Text),
+                telephoneTextBox.Text,
+                mobileNumberTextBox.Text,
+                emailTextBox.Text,
+                faxTextBox.Text);
+        }
+
         private void deleteCompanyButton_Click(object sender, EventArgs e)
         {
             if (validateSelectedRowAndColumn(selectedDataGridViewCellRowIndex, selectedDataGridViewCellColumnIndex))
@@ -84,7 +128,7 @@ namespace GORIPBS
                     if (companies.deleteCompany(selectedDataGridViewCellRowIndex))
                     {
                         MessageBox.Show("Firma je uspešno obrisana.");
-                        bindingSource.ResetBindings(false);
+                        refreshElementsInForm();
                     }
                     else
                         MessageBox.Show("Došlo je do greške prilikom brisanja firme!");
@@ -94,6 +138,38 @@ namespace GORIPBS
             {
                 MessageBox.Show("Izaberite firmu koju hoćete da obrišete.");
             }
+        }
+
+        private void refreshElementsInForm() 
+        {
+            resetSavedSelectedValues();
+            resetTextBoxes();
+            bindingSource.ResetBindings(false);
+        }
+
+        private void resetSavedSelectedValues() 
+        {
+            selectedDataGridViewCellRowIndex = -1;
+            selectedDataGridViewCellColumnIndex = -2;
+            selectedCompanyId = -1;
+        }
+
+        private void resetTextBoxes() 
+        {
+            companyNameTextBox.Clear();
+            pibTextBox.Clear();
+            addressTextBox.Clear();
+            cityTextBox.Clear();
+            postalCodeTextBox.Clear();
+            ownerTextBox.Clear();
+            bankAccountTextBox.Clear();
+            idNumberTextBox.Clear();
+            bankTextBox.Clear();
+            activityCodeTextBox.Clear();
+            telephoneTextBox.Clear();
+            mobileNumberTextBox.Clear();
+            emailTextBox.Clear();
+            faxTextBox.Clear();
         }
     }
 }

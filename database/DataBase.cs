@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Data;
 
 namespace GORIPBS.database
 {
@@ -55,12 +56,14 @@ namespace GORIPBS.database
 
         public void openConnection() 
         {
-            connection.Open();
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
         }
 
         public void closeConnection()
         {
-            connection.Close();
+            if (connection.State != ConnectionState.Closed)
+                connection.Close();
         }
     }
 }

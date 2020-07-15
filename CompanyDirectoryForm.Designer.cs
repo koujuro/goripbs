@@ -113,6 +113,7 @@
             this.saveCompanyButton.TabIndex = 2;
             this.saveCompanyButton.Text = "** Sačuvaj";
             this.saveCompanyButton.UseVisualStyleBackColor = true;
+            this.saveCompanyButton.Click += new System.EventHandler(this.saveCompanyButton_Click);
             // 
             // deleteCompanyButton
             // 
@@ -139,6 +140,7 @@
             this.companiesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.companiesDataGridView.Location = new System.Drawing.Point(12, 95);
             this.companiesDataGridView.Name = "companiesDataGridView";
+            this.companiesDataGridView.ReadOnly = true;
             this.companiesDataGridView.Size = new System.Drawing.Size(488, 343);
             this.companiesDataGridView.TabIndex = 5;
             this.companiesDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.companiesDataGridView_CellClick);

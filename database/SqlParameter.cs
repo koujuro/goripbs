@@ -24,8 +24,7 @@ namespace GORIPBS.database
 
         public bool checkIfValueIsInt() 
         {
-            int value;
-            return Int32.TryParse(Value, out value);
+            return Int32.TryParse(Value, out _);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GORIPBS.database;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +62,27 @@ namespace GORIPBS.classes
             MobileNumber = mobileNumber;
             Email = email;
             Fax = fax;
+        }
+
+        public SqlParameter[] generateSqlParametersFromObjectFields() 
+        {
+            return new SqlParameter[] {
+                new SqlParameter("companyId", CompanyId.ToString(), DbType.Int32),
+                new SqlParameter("name", Name, DbType.String),
+                new SqlParameter("pib", PIB, DbType.String),
+                new SqlParameter("address", Address, DbType.String),
+                new SqlParameter("city", City, DbType.String),
+                new SqlParameter("postalCode", PostalCode.ToString(), DbType.Int32),
+                new SqlParameter("owner", Owner, DbType.String),
+                new SqlParameter("bankAccount", BankAccount, DbType.String),
+                new SqlParameter("idNumber", IdentificationNumber, DbType.String),
+                new SqlParameter("bank", Bank, DbType.String),
+                new SqlParameter("activityCode", ActivityCode.ToString(), DbType.Int32),
+                new SqlParameter("telephone", Telephone, DbType.String),
+                new SqlParameter("mobileNumber", MobileNumber, DbType.String),
+                new SqlParameter("email", Email, DbType.String),
+                new SqlParameter("fax", Fax, DbType.String)
+            };
         }
     }
 }
