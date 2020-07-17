@@ -67,21 +67,21 @@ namespace GORIPBS.classes
         public SqlParameter[] generateSqlParametersFromObjectFields() 
         {
             return new SqlParameter[] {
-                new SqlParameter("companyId", CompanyId.ToString(), DbType.Int32),
-                new SqlParameter("name", Name, DbType.String),
-                new SqlParameter("pib", PIB, DbType.String),
-                new SqlParameter("address", Address, DbType.String),
-                new SqlParameter("city", City, DbType.String),
-                new SqlParameter("postalCode", PostalCode.ToString(), DbType.Int32),
-                new SqlParameter("owner", Owner, DbType.String),
-                new SqlParameter("bankAccount", BankAccount, DbType.String),
-                new SqlParameter("idNumber", IdentificationNumber, DbType.String),
-                new SqlParameter("bank", Bank, DbType.String),
-                new SqlParameter("activityCode", ActivityCode.ToString(), DbType.Int32),
-                new SqlParameter("telephone", Telephone, DbType.String),
-                new SqlParameter("mobileNumber", MobileNumber, DbType.String),
-                new SqlParameter("email", Email, DbType.String),
-                new SqlParameter("fax", Fax, DbType.String)
+                new SqlParameter("CompanyId", CompanyId.ToString(), DbType.Int32),
+                new SqlParameter("Name", Name, DbType.String),
+                new SqlParameter("PIB", PIB, DbType.String),
+                new SqlParameter("Address", Address, DbType.String),
+                new SqlParameter("City", City, DbType.String),
+                new SqlParameter("PostalCode", PostalCode.ToString(), DbType.Int32),
+                new SqlParameter("Owner", Owner, DbType.String),
+                new SqlParameter("BankAccount", BankAccount, DbType.String),
+                new SqlParameter("IdentificationNumber", IdentificationNumber, DbType.String),
+                new SqlParameter("Bank", Bank, DbType.String),
+                new SqlParameter("ActivityCode", ActivityCode.ToString(), DbType.Int32),
+                new SqlParameter("Telephone", Telephone, DbType.String),
+                new SqlParameter("MobileNumber", MobileNumber, DbType.String),
+                new SqlParameter("Email", Email, DbType.String),
+                new SqlParameter("Fax", Fax, DbType.String)
             };
         }
     }

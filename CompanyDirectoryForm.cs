@@ -80,22 +80,37 @@ namespace GORIPBS
 
         private void saveCompanyButton_Click(object sender, EventArgs e)
         {
-            try
+            if (validateSelectedRowAndColumn(selectedDataGridViewCellRowIndex, selectedDataGridViewCellColumnIndex))
             {
-                Company editedCompany = createCompanyFromForm();
-                if (companies.saveCompany(editedCompany))
+                try
                 {
-                    MessageBox.Show("Izmene su uspešno sačuvane.");
-                    companies.updateCompanyInListOfCompanies(editedCompany);
-                    refreshElementsInForm();
+                    savingCompanyWithCompanyDirectory();
                 }
-                else
-                    MessageBox.Show("Došlo je do greške prilikom čuvanja izmena!");
+                catch (FormatException)
+                {
+                    MessageBox.Show("Neki od unetih podataka nisu validni!");
+                }
+                catch (SQLiteException ex)
+                {
+                    if (ex.ErrorCode == 19)
+                        MessageBox.Show("PIB koji ste uneli već postoji!", "Greška prilikom čuvanja podataka u bazi");
+                }
             }
-            catch (FormatException)
+            else
+                MessageBox.Show("Izaberite firmu koju želite da ažurirate!");
+        }
+
+        private void savingCompanyWithCompanyDirectory() 
+        {
+            Company editedCompany = createCompanyFromForm();
+            if (companies.saveCompany(editedCompany))
             {
-                MessageBox.Show("Neki od unetih podataka nisu validni!");
+                MessageBox.Show("Izmene su uspešno sačuvane.");
+                companies.updateCompanyInListOfCompanies(editedCompany);
+                refreshElementsInForm();
             }
+            else
+                MessageBox.Show("Došlo je do greške prilikom čuvanja izmena!");
         }
 
         private Company createCompanyFromForm() 
@@ -125,7 +140,7 @@ namespace GORIPBS
                 DialogResult dialogResult = MessageBox.Show("Da li ste sigurni da želite da obrišete izabranu firmu?", "Brisanje firme", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    if (companies.deleteCompany(selectedDataGridViewCellRowIndex))
+                    if (companies.deleteCompany(selectedCompanyId))
                     {
                         MessageBox.Show("Firma je uspešno obrisana.");
                         refreshElementsInForm();

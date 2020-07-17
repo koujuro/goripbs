@@ -41,5 +41,10 @@ namespace GORIPBS.database
 
             return sqlCommand;
         }
+
+        public static void closeConnectionToDataBase() 
+        {
+            DataBase.DataBaseSingleton().closeConnection();
+        }
     }
 }

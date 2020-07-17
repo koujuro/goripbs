@@ -28,7 +28,7 @@ namespace GORIPBS.classes
             {
                 ListOfCompanies.Add(createCompanyObjectFromRowInDB(sQLiteDataReader));
             }
-            DataBase.DataBaseSingleton().closeConnection();
+            SqlHandler.closeConnectionToDataBase();
         }
 
         private SQLiteDataReader fetchCompaniesFromDB() 
@@ -75,7 +75,7 @@ namespace GORIPBS.classes
 
         public bool saveCompany(Company editedCompany) 
         {
-            int rowsAffected = 0;
+            int rowsAffected;
             if (editedCompany.CompanyId == 0)
             {
                 rowsAffected = insertCompanyIntoDB(editedCompany);
@@ -84,70 +84,67 @@ namespace GORIPBS.classes
             {
                 rowsAffected = updateCompanyInDB(editedCompany);
             }
+            SqlHandler.closeConnectionToDataBase();
 
-            return (rowsAffected != 0) ? true : false;
+            return rowsAffected != 0;
         }
 
         private int insertCompanyIntoDB(Company newCompany) 
         {
             string sql = "INSERT INTO COMPANY ('Name', 'PIB', 'Address', 'City', 'PostalCode', 'Owner', 'BankAccount', 'IdentificationNumber', 'Bank', 'ActivityCode', 'Telephone', 'MobileNumber', 'Email', 'Fax', 'Deleted')" +
-                "VALUES(@name, @pib, @address, @city, @postalCode, @owner, @bankAccount, @idNumber, @bank, @activityCode, @telephone, @mobileNumber, @email, @fax, 0)";
+                "VALUES(@Name, @PIB, @Address, @City, @PostalCode, @Owner, @BankAccount, @IdentificationNumber, @Bank, @ActivityCode, @Telephone, @MobileNumber, @Email, @Fax, 0)";
             SqlParameter[] sqlParameters = newCompany.generateSqlParametersFromObjectFields();
             return SqlHandler.executionQuery(sql, sqlParameters);
         }  
 
         private int updateCompanyInDB(Company editedCompany) 
         {
-            StringBuilder sql = new StringBuilder("UPDATE COMPANY SET ");
-            Company companyToBeUpdated = getCompanyByCompanyId(editedCompany.CompanyId);
-            List<SqlParameter> listOfSqlParameters = new List<SqlParameter>();
-            FieldInfo[] companyObjectFields = typeof(Company).GetFields();
-
-            foreach (FieldInfo companyObjectField in companyObjectFields) 
-            {
-                PropertyInfo propertyInfo = typeof(Company).GetProperty(companyObjectField.Name);
-                string valueOfOriginalCompanyField = propertyInfo.GetValue(companyToBeUpdated).ToString();
-                string valueOfEditedCompanyField = propertyInfo.GetValue(editedCompany).ToString();
-                DbType dbTypeOfCompanyField = companyObjectField.GetTypeAsDbTypeStringOrInt();
-
-                if (!valueOfOriginalCompanyField.Equals(valueOfEditedCompanyField)) 
-                {
-                    sql.Append(companyObjectField.Name).Append("=@").Append(companyObjectField.Name).Append(", ");
-                    listOfSqlParameters.Add(new SqlParameter(companyObjectField.Name, valueOfEditedCompanyField, dbTypeOfCompanyField));
-                }
-            }
-
-            if (listOfSqlParameters.Count() != 0) 
-            {
-                string finalSql = sql.ToString();
-                finalSql = finalSql.Substring(0, sql.Length - 1) + " WHERE CompanyId=" + editedCompany.CompanyId;
-                return SqlHandler.executionQuery(finalSql, listOfSqlParameters.ToArray());
-            }
-
-            return -1;
+            string sql = "UPDATE COMPANY SET Name=@Name, PIB=@PIB, Address=@Address, City=@City, PostalCode=@PostalCode, " +
+                "Owner=@Owner, BankAccount=@BankAccount, IdentificationNumber=@IdentificationNumber, Bank=@Bank, ActivityCode=@ActivityCode," +
+                "Telephone=@Telephone, MobileNumber=@MobileNumber, Email=@Email, Fax=@Fax WHERE CompanyId=" + editedCompany.CompanyId;
+            SqlParameter[] sqlParameters = editedCompany.generateSqlParametersFromObjectFields();
+            return SqlHandler.executionQuery(sql, sqlParameters);
         }
 
         public void updateCompanyInListOfCompanies(Company newCompany) 
         {
             ListOfCompanies[ListOfCompanies.FindIndex(ind => ind.CompanyId.Equals(newCompany.CompanyId))] = newCompany;
+            ListOfCompanies[ListOfCompanies.IndexOf(newCompany)].CompanyId = getLastCompanyIdFromDB();
         }
 
-        public bool deleteCompany(int indexInListOfCompanies) 
+        private int getLastCompanyIdFromDB() 
         {
-            if (ListOfCompanies[indexInListOfCompanies].CompanyId == 0)
+            int id = 0;
+            string sql = "SELECT CompanyID FROM COMPANY ORDER BY CompanyID desc LIMIT 1";
+            SQLiteDataReader reader = SqlHandler.selectionQuery(sql);
+            if (reader.Read()) 
             {
-                ListOfCompanies.RemoveAt(indexInListOfCompanies);
+                id = reader.GetInt32(0);
+            }
+            return id;
+        }
+
+        public bool deleteCompany(int companyId) 
+        {
+            int indexOfCompany = ListOfCompanies.FindIndex(ind => ind.CompanyId.Equals(companyId));
+            if (companyId == 0)
+            {
+                ListOfCompanies.RemoveAt(indexOfCompany);
                 return true;
             }
             else
             {
-                if (deleteCompanyFromDB(ListOfCompanies[indexInListOfCompanies].CompanyId) == 1)
+                if (deleteCompanyFromDB(companyId) == 1)
                 {
-                    ListOfCompanies.RemoveAt(indexInListOfCompanies);
+                    ListOfCompanies.RemoveAt(indexOfCompany);
+                    SqlHandler.closeConnectionToDataBase();
                     return true;
                 }
-                else
+                else 
+                {
+                    SqlHandler.closeConnectionToDataBase();
                     return false;
+                }
             }
         }
 
