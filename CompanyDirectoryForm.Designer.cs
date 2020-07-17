@@ -94,6 +94,7 @@
             this.searchCompanyTextBox.Name = "searchCompanyTextBox";
             this.searchCompanyTextBox.Size = new System.Drawing.Size(139, 20);
             this.searchCompanyTextBox.TabIndex = 1;
+            this.searchCompanyTextBox.TextChanged += new System.EventHandler(this.searchCompanyTextBox_TextChanged);
             // 
             // addNewEmptyCompanyButton
             // 

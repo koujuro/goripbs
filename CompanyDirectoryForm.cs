@@ -16,6 +16,7 @@ namespace GORIPBS
     public partial class CompanyDirectoryForm : Form
     {
         CompanyDirectory companies;
+        List<Company> reducedCompaniesDirectory;
         BindingSource bindingSource;
         int selectedDataGridViewCellRowIndex;
         int selectedDataGridViewCellColumnIndex;
@@ -45,7 +46,7 @@ namespace GORIPBS
             {
                 DataGridViewRow dataGridViewRow = companiesDataGridView.Rows[e.RowIndex];
                 populateTextBoxesWithDataFromSelectedRow(dataGridViewRow);
-                selectedCompanyId = companies.ListOfCompanies[selectedDataGridViewCellRowIndex].CompanyId;
+                selectedCompanyId = Int32.Parse(companiesDataGridView.Rows[selectedDataGridViewCellRowIndex].Cells["CompanyId"].Value.ToString());
             }
         }
 
@@ -185,6 +186,26 @@ namespace GORIPBS
             mobileNumberTextBox.Clear();
             emailTextBox.Clear();
             faxTextBox.Clear();
+        }
+
+        private void searchCompanyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (searchCompanyTextBox.Text != "")
+            {
+                reducedCompaniesDirectory = new List<Company>();
+                foreach (Company company in companies.ListOfCompanies)
+                {
+                    if (company.Name.ToLower().Contains(searchCompanyTextBox.Text.ToLower()))
+                        reducedCompaniesDirectory.Add(company);
+                }
+                bindingSource.DataSource = reducedCompaniesDirectory;
+            }
+            else 
+            {
+                reducedCompaniesDirectory = null;
+                bindingSource.DataSource = companies.ListOfCompanies;
+            }
+            refreshElementsInForm();
         }
     }
 }
