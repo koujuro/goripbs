@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Data;
 
-namespace GORIPBS.classes
+namespace GORIPBS.database
 {
     class DataBase
     {
@@ -30,41 +31,39 @@ namespace GORIPBS.classes
         {
             string path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             string newPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(path, "..", ".."));
-            return newPath + "\\database\\database.db";
+            return newPath + "\\assets\\database.db";
         }
 
-        public string selectionQuery(string sql) 
+        public SQLiteDataReader selectionQuery(SQLiteCommand command) 
         {
             openConnection();
-            string result = "";
-            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            command.Connection = connection;
             SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read()) {
-                result += reader["Name"] + ", ";
-            }
-            closeConnection();
+            //closeConnection();
 
-            return result.Substring(0, result.Length - 2);
+            return reader;
         }
 
-        public int executionQuery(string sql)
+        public int executionQuery(SQLiteCommand command)
         {
             openConnection();
-            SQLiteCommand command = new SQLiteCommand(sql, connection);
+            command.Connection = connection;
             int rowsAffected = command.ExecuteNonQuery();
-            closeConnection();
+            //closeConnection();
 
             return rowsAffected;
         }
 
         public void openConnection() 
         {
-            connection.Open();
+            if (connection.State != ConnectionState.Open)
+                connection.Open();
         }
 
         public void closeConnection()
         {
-            connection.Close();
+            if (connection.State != ConnectionState.Closed)
+                connection.Close();
         }
     }
 }
