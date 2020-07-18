@@ -1,4 +1,5 @@
 ﻿using GORIPBS.database;
+using GORIPBS.classes.entities;
 using System;
 using System.Collections.Generic;
 using System.Data;

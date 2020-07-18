@@ -1,4 +1,6 @@
 ﻿using GORIPBS.classes;
+using GORIPBS.classes.entities;
+using GORIPBS.database;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace GORIPBS
         int selectedDataGridViewCellRowIndex;
         int selectedDataGridViewCellColumnIndex;
         int selectedCompanyId;
+
         public CompanyDirectoryForm()
         {
             InitializeComponent();
@@ -86,6 +89,7 @@ namespace GORIPBS
                 try
                 {
                     savingCompanyWithCompanyDirectory();
+                    searchCompanyTextBox.Clear();
                 }
                 catch (FormatException)
                 {
@@ -145,6 +149,7 @@ namespace GORIPBS
                     {
                         MessageBox.Show("Firma je uspešno obrisana.");
                         refreshElementsInForm();
+                        searchCompanyTextBox.Clear();
                     }
                     else
                         MessageBox.Show("Došlo je do greške prilikom brisanja firme!");
@@ -206,6 +211,16 @@ namespace GORIPBS
                 bindingSource.DataSource = companies.ListOfCompanies;
             }
             refreshElementsInForm();
+        }
+
+        private void exitFormButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CompanyDirectoryForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SqlHandler.closeConnectionToDataBase();
         }
     }
 }

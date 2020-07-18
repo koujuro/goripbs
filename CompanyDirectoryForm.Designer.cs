@@ -134,6 +134,7 @@
             this.exitFormButton.TabIndex = 4;
             this.exitFormButton.Text = "Izlaz";
             this.exitFormButton.UseVisualStyleBackColor = true;
+            this.exitFormButton.Click += new System.EventHandler(this.exitFormButton_Click);
             // 
             // companiesDataGridView
             // 
@@ -412,6 +413,7 @@
             this.Controls.Add(this.searchCompanyGroupBox);
             this.Name = "CompanyDirectoryForm";
             this.Text = "CompanyDirectoryForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CompanyDirectoryForm_FormClosing);
             this.Load += new System.EventHandler(this.CompanyDirectoryForm_Load);
             this.searchCompanyGroupBox.ResumeLayout(false);
             this.searchCompanyGroupBox.PerformLayout();

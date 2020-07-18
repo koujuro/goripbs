@@ -65,14 +65,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="classes\Company.cs" />
+    <Compile Include="classes\entities\Company.cs" />
     <Compile Include="classes\CompanyDirectory.cs" />
     <Compile Include="database\DataBase.cs" />
     <Compile Include="classes\ExtensionMethods.cs" />
-    <Compile Include="classes\Invoice.cs" />
-    <Compile Include="classes\InvoiceItem.cs" />
-    <Compile Include="classes\Item.cs" />
-    <Compile Include="classes\Pricelist.cs" />
+    <Compile Include="classes\entities\Invoice.cs" />
+    <Compile Include="classes\entities\InvoiceItem.cs" />
+    <Compile Include="classes\entities\Item.cs" />
+    <Compile Include="classes\entities\Pricelist.cs" />
     <Compile Include="database\SqlHandler.cs" />
     <Compile Include="database\SqlParameter.cs" />
     <Compile Include="CompanyDirectoryForm.cs">
