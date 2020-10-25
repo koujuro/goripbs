@@ -16,7 +16,7 @@ namespace GORIPBS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CompanyDirectoryForm());
+            Application.Run(new ItemEntryForm());
         }
     }
 }

@@ -19,3 +19,4 @@ C:\Users\Banshee\source\repos\GORIPBS\obj\Debug\GORIPBS.csproj.CopyComplete
 C:\Users\Banshee\source\repos\GORIPBS\obj\Debug\GORIPBS.exe
 C:\Users\Banshee\source\repos\GORIPBS\obj\Debug\GORIPBS.pdb
 C:\Users\Banshee\source\repos\GORIPBS\obj\Debug\GORIPBS.CompanyDirectoryForm.resources
+C:\Users\Banshee\source\repos\GORIPBS\obj\Debug\GORIPBS.ItemEntryForm.resources
